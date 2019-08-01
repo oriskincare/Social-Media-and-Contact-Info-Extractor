@@ -70,15 +70,13 @@ module.exports = {
     let found = null;
     const platforms = Object.keys(commerceSelectors)
     for (let i=0; i < platforms.length; i++) {
-      try {
-        const selector = commerceSelectors[platforms[i]];
-        console.log(`Evaluating ${selector}`)
-        found = await page.$eval(selector, (el) => el && platforms[i]);
-        console.log(`Found: ${found}`)
-        if (found) {
-          break;
-        }
-      } catch (e) {}
+      const selector = commerceSelectors[platforms[i]];
+      console.log(`Querying ${selector}`)
+      found = await page.$(selector);
+      console.log(`Found: ${found}`)
+      if (found) {
+        break;
+      }
     }
     return found;
   },
