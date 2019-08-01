@@ -63,7 +63,7 @@ const commerceSelectors = {
   woo: '[class*="woocommerce"]',
   magento: 'script[src*="skin/frontend"]',
   bigcommerce: 'script[src*="bigcommerce.com"]',
-  demandware: 'script[src=*="demandware.static"]'
+  demandware: 'script[src*="demandware.static"]'
 };
 
 module.exports = {
