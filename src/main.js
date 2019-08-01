@@ -76,7 +76,7 @@ Apify.main(async () => {
 
       // Merge frames with main
       const mergedSocial = helpers.mergeSocial(frameSocialHandles, socialHandles);
-      Object.assign(result, mergedSocial);
+      Object.assign(result, mergedSocial, { commercePlatform });
 
       // Clean up
       delete result.html;
