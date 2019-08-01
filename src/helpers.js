@@ -73,7 +73,7 @@ module.exports = {
       try {
         const selector = commerceSelectors[platforms[i]];
         console.log(`Evaluating ${selector}`)
-        found = await page.$$eval(selector, (el) => el && platforms[i]);
+        found = await page.$eval(selector, (el) => el && platforms[i]);
         console.log(`Found: ${found}`)
         if (found) {
           break;
