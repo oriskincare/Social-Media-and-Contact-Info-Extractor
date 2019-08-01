@@ -63,6 +63,7 @@ const commerceSelectors = {
   woo: '[class*="woocommerce"]',
   magento: 'script[src*="skin/frontend"]',
   bigcommerce: 'script[src*="bigcommerce.com"]',
+  demandware: 'script[src=*="demandware.static"]'
 };
 
 module.exports = {
@@ -71,11 +72,9 @@ module.exports = {
     const platforms = Object.keys(commerceSelectors)
     for (let i=0; i < platforms.length; i++) {
       const selector = commerceSelectors[platforms[i]];
-      console.log(`Querying ${selector}`)
       const el = await page.$(selector);
       if (el) {
         found = platforms[i];
-        console.log(`Found: ${found}`)
         break;
       }
     }
