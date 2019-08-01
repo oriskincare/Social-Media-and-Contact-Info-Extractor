@@ -58,7 +58,27 @@ async function addRequestsToQueueInBatches(requests, requestQueue, batchSize = 5
   return Promise.all(queueOperationInfos);
 }
 
+const commerceSelectors = {
+  shopify: 'script[src*="cdn.shopify.com"]',
+  woo: '[class*="woocommerce"]',
+  magento: 'script[src*="skin/frontend"]',
+  bigcommerce: 'script[src*="bigcommerce.com"]',
+};
+
 module.exports = {
+  detectCommerce: async (page) => {
+    let found = null;
+    const platforms = Object.keys(commerceSelectors)
+    for (let i=0; i < platforms.length; i++) {
+      try {
+        const selector = commerceSelectors[platforms[i]];
+        found = await page.$$eval(selector, (el) => el && platforms[i]);
+        break;
+      } catch (e) {}
+    }
+    return found;
+  },
+
   async getAttribute(element, attr) {
     try {
       const prop = await element.getProperty(attr);

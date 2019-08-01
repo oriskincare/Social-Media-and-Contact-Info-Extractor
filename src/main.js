@@ -71,6 +71,9 @@ Apify.main(async () => {
       // Extract and save handles, emails, phone numbers
       const socialHandles = await Apify.utils.social.parseHandlesFromHtml(result.html);
 
+      // detect commerce
+      const commercePlatform = await helpers.detectCommerce(page);
+
       // Merge frames with main
       const mergedSocial = helpers.mergeSocial(frameSocialHandles, socialHandles);
       Object.assign(result, mergedSocial);
