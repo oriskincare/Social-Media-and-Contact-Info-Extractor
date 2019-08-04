@@ -35,7 +35,8 @@
             "title": "Filter URLs by RegExp",
             "description": "Filter URLs matching a specified RegExp (does not crawl URLs that match). The expression is compiled with i and g flags",
             "type": "string",
-            "prefill": "\/(post|article|product)"
+            "prefill": "\/(post|article|product)",
+            "editor": "textfield"
         },
         "sameDomain": {
             "title": "Stay within domain",
