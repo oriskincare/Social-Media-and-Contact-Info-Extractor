@@ -4,11 +4,18 @@ const domain = require('getdomain');
 
 const { Request } = Apify;
 
+const nih = /\/(post|article|product)/ig;
+const isInteresting = (href) => {
+  nih.lastIndex = 0;
+  return !nih.test(href);
+}
+
 async function extractUrlsFromPage(page, selector, sameDomain, urlDomain) {
   /* istanbul ignore next */
   const output = await page.$$eval(selector, linkEls => linkEls
     .map(link => link.href)
-    .filter(href => !!href));
+    .filter(href => !!href))
+    .filter(isInteresting)
 
   return output.filter(url => (sameDomain ? module.exports.getDomain(url) === urlDomain : true));
 }
