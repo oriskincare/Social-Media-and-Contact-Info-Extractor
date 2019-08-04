@@ -10,15 +10,24 @@ const isInteresting = (href) => {
   return !nih.test(href);
 }
 
-async function extractUrlsFromPage(page, selector, sameDomain, urlDomain) {
+async function extractUrlsFromPage(page, selector, sameDomain, urlDomain, filterRegex) {
   /* istanbul ignore next */
   const output = await page.$$eval(selector, linkEls => linkEls
     .map(link => link.href)
     .filter(href => !!href))
 
+  const re = filterRegex && new RegExp(filterRegex, 'ig');
+  const filterByRegex = (url) => {
+    if (re) {
+      re.lastIndex = 0;
+      return !re.test(url);
+    }
+    return true;
+  }
+
   return output.filter(url =>
     (sameDomain ? module.exports.getDomain(url) === urlDomain : true) &&
-    isInteresting(url));
+    filterByRegex(url));
 }
 
 function createRequestOptions(sources, userData = {}) {
@@ -147,9 +156,10 @@ module.exports = {
       sameDomain,
       urlDomain,
       depth,
+      filterRegex,
     } = options;
 
-    const urls = await extractUrlsFromPage(page, selector, sameDomain, urlDomain);
+    const urls = await extractUrlsFromPage(page, selector, sameDomain, urlDomain, filterRegex);
 
     const requestOptions = createRequestOptions(urls, { depth: depth + 1 });
 

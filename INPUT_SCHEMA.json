@@ -31,6 +31,12 @@
             "minimum": 1,
             "prefill": 100
         },
+        "filterRegex": {
+            "title": "Filter URLs by RegExp",
+            "description": "Filter URLs matching a specified RegExp (does not crawl URLs that match). The expression is compiled with i and g flags",
+            "type": "string",
+            "prefill": "\/(post|article|product)"
+        },
         "sameDomain": {
             "title": "Stay within domain",
             "type": "boolean",

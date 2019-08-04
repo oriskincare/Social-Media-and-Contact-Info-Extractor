@@ -50,6 +50,7 @@ Apify.main(async () => {
         sameDomain: input.sameDomain,
         urlDomain: helpers.getDomain(request.url),
         depth: request.userData.depth,
+        filterRegex: input.filterRegex,
       };
 
       // Enqueue all links on the page
