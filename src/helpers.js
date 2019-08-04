@@ -14,8 +14,7 @@ async function extractUrlsFromPage(page, selector, sameDomain, urlDomain) {
   /* istanbul ignore next */
   const output = await page.$$eval(selector, linkEls => linkEls
     .map(link => link.href)
-    .filter(href => !!href))
-    .filter(isInteresting)
+    .filter(href => !!href && isInteresting(href)))
 
   return output.filter(url => (sameDomain ? module.exports.getDomain(url) === urlDomain : true));
 }
