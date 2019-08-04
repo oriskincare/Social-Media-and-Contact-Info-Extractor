@@ -157,9 +157,13 @@ module.exports = {
       urlDomain,
       depth,
       filterRegex,
+      maxRequests,
     } = options;
 
-    const urls = await extractUrlsFromPage(page, selector, sameDomain, urlDomain, filterRegex);
+    let urls = await extractUrlsFromPage(page, selector, sameDomain, urlDomain, filterRegex);
+    if (maxRequests) {
+      urls = urls.slice(0, maxRequests);
+    }
 
     const requestOptions = createRequestOptions(urls, { depth: depth + 1 });
 

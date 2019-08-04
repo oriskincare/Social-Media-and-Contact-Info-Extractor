@@ -51,10 +51,11 @@ Apify.main(async () => {
         urlDomain: helpers.getDomain(request.url),
         depth: request.userData.depth,
         filterRegex: input.filterRegex,
+        maxRequests: input.maxRequests,
       };
 
-      // Enqueue all links on the page
-      if (typeof input.maxDepth !== 'number' || request.userData.depth < input.maxDepth) {
+      // Constant depth of 1
+      if (request.userData.depth < 1) {
         await helpers.enqueueUrls(linksToEnqueueOptions);
       }
 
@@ -101,9 +102,6 @@ Apify.main(async () => {
       });
     },
   };
-
-  // Limit requests
-  if (input.maxRequests) crawlerOptions.maxRequestsPerCrawl = input.maxRequests;
 
   // Create crawler
   const crawler = new Apify.PuppeteerCrawler(crawlerOptions);
